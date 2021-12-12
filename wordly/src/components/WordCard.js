@@ -36,7 +36,7 @@ export default function WordCard(props) {
 
     let cardHeader = <CardHeader
         title={data?.hwi?.hw ?? 'Missing Alt Text'}
-        subheader={data?.hwi?.prs?.[0]?.mw ?? "Missing Pronounciation"}
+        subheader={data?.hwi?.prs?.[0]?.mw ?? "—"}
         sx={{
             textTransform: 'capitalize'
         }}
@@ -45,14 +45,14 @@ export default function WordCard(props) {
     if (data?.hwi?.prs?.[0]?.sound?.audio) {
         cardHeader = <CardHeader
             title={data?.hwi?.hw ?? 'Missing Alt Text'}
-            subheader={data?.hwi?.prs?.[0]?.mw ?? ""}
+            subheader={data?.hwi?.prs?.[0]?.mw ?? "—"}
             sx={{
                 textTransform: 'capitalize'
             }}
 
             action={
-                <IconButton aria-label="settings">
-                    <VolumeUpIcon onClick={playAudio} />
+                <IconButton aria-label="auido" onClick={playAudio}>
+                    <VolumeUpIcon />
                 </IconButton>
             }
         />

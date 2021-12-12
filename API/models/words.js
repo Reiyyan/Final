@@ -11,7 +11,6 @@ class Words {
   async getWordFromAPI(wordArg) {
     let response = await axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${wordArg}?key=${apiKey}`)
       .then(function (response) {
-        // console.log(response);
         return response;
       })
       .catch(function (error) {
@@ -31,17 +30,14 @@ class Words {
 
       const wordDocument = await dbo.collection("Words").findOne(query);
 
-      // Word found in DB
+      // Word found in DB and time isn't expired
       if (wordDocument !== undefined && wordDocument !== null && this.timeDifference(wordDocument.time)) {
-        console.log("Found document");
-        // console.log(wordDocument);
         return wordDocument.data
       }
+
       // Word not found or time expired
       else {
         let response = await this.getWordFromAPI(wordArg);
-        console.log("Word not fonud, API CAll");
-        // console.log(response);
         if (response.status === 200) {
           await this.addWord(wordArg, response.data);
         }
@@ -58,6 +54,7 @@ class Words {
 
   async addWord(wordArg, wordObject) {
     try {
+      // Case insensitive search
       const wordRegex = '^' + wordArg + '$';
       const query = { 'word': { '$regex': wordRegex, $options: 'i' } }
 
@@ -66,9 +63,9 @@ class Words {
 
       const update = { $set: { word: wordArg, data: wordObject, time: new Date() } };
       const options = { upsert: true };
+      // Upsert statement used to update or insert if the word doesn't exist
       const wordDocument = await dbo.collection("Words").updateOne(query, update, options);
-      // .insertOne(newDoc);
-      console.log(wordDocument);
+      
       if (wordDocument.acknowledged === true) {
         return { status: 200, data: [] }
       }
@@ -93,8 +90,5 @@ class Words {
   }
 
 }
-
-test = new Words();
-let x = test.getWord("test");
 
 module.exports = Words

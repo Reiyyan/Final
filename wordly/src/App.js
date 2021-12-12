@@ -25,7 +25,7 @@ export default function App() {
                 '&:-webkit-autofill': {
                   WebkitTextFillColor: '#000',
                   WebkitBoxShadow: '0 0 0px 1000px rgba(236, 236, 236, 1) inset !important',
-                  transition: 'background-color 5000s ease-in-out 0s !important'
+                  transition: 'background-color 5000s ease-in-out 0s !important',
                 },
               },
             },

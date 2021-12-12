@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function Authentication(props) {
     const [email, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('Test1234');
+    const [password, setPassword] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const [signUp, setSignUp] = React.useState(false);
     const [toastMessage, setToastMessage] = React.useState('');

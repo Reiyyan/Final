@@ -17,9 +17,7 @@ export default function Wordly() {
         if (word !== '' && word !== null) {
             DictionaryAPI.getWord(word).then(e => {
                 
-                console.log(e);
-
-                if (e.data[0].meta) {
+                if (e.data[0] && e.data[0].meta) {
                     setData(e?.data ?? []);
                     setWordList([])
                 }
@@ -45,7 +43,7 @@ export default function Wordly() {
                 padding: '2rem',
             }}>
                 <Typography variant='h3' textAlign='center' mb={3}>
-                    Welcome to Wordly, Find your words!
+                    Welcome to Wordly, Find your Defintions!
                 </Typography>
                 <Grid
                     container
@@ -59,6 +57,7 @@ export default function Wordly() {
                         value={word}
                         onChange={handleWord}
                         onKeyPress={handleEnter}
+                        autoComplete="off"
                         sx={{
                             marginRight: '10px'
                         }}
@@ -100,7 +99,7 @@ export default function Wordly() {
                     wordList.map(e => {
                         return (<li>{e}</li>);
                     })
-                    : "Nope"}
+                    : ""}
             </Grid>
         </>
     );

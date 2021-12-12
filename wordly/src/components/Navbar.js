@@ -30,7 +30,7 @@ export default function Navbar(props) {
                         Wordly
                     </Typography>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        {props.user ? `Hello, ${props.user}` : ''}
+                        {props.user ? `${props.user}` : ''}
                     </Typography>
                     <FormGroup>
                         <FormControlLabel

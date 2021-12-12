@@ -6,7 +6,6 @@ const baseURL = 'http://localhost:8080';
 export async function getWord(word) {
     let response = await axios.get(`${baseURL}/words/${word}`)
         .then(function (response) {
-            console.log(response);
             return response;
         })
         .catch(function (error) {
