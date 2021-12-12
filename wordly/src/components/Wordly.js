@@ -16,6 +16,9 @@ export default function Wordly() {
     const searchDictionary = () => {
         if (word !== '' && word !== null) {
             DictionaryAPI.getWord(word).then(e => {
+                
+                console.log(e);
+
                 if (e.data[0].meta) {
                     setData(e?.data ?? []);
                     setWordList([])

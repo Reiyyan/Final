@@ -14,14 +14,17 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Authentication(props) {
-    const [username, setUsername] = React.useState('Reiyyan');
+    const [email, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('Test1234');
     const [open, setOpen] = React.useState(false);
     const [signUp, setSignUp] = React.useState(false);
     const [toastMessage, setToastMessage] = React.useState('');
 
     const handleUsername = (event) => {
-        setUsername(event.target.value);
+
+
+            setUsername(event.target.value);
+    
     };
 
     const handlePassword = (event) => {
@@ -29,8 +32,13 @@ export default function Authentication(props) {
     };
 
     const handleLogin = () => {
-        if (username === '') {
-            setToastMessage("Please Enter Username!")
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (email === '') {
+            setToastMessage("Please Enter Email!")
+            setOpen(true);
+        }
+        else if(emailRegex.test(email) === false){
+            setToastMessage("Incorrect Email Format! Try formatting it as 'email@server.com'")
             setOpen(true);
         }
         else if (password === '') {
@@ -43,7 +51,7 @@ export default function Authentication(props) {
         }
         else {
             if (signUp === true) {
-                SignUp(username, password).then(e => {
+                SignUp(email, password).then(e => {
                     if (e.data && e.data.user) {
                         props.setUser(e?.data?.user)
                         props.setLoggedIn(true)
@@ -56,13 +64,13 @@ export default function Authentication(props) {
             }
             else {
                 console.log("Trying to login")
-                Login(username, password).then(e => {
+                Login(email, password).then(e => {
                     if (e.data && e.data.user) {
                         props.setUser(e?.data?.user)
                         props.setLoggedIn(true)
                     }
                     else {
-                        setToastMessage("Incorrect Username and Password Combination!");
+                        setToastMessage("Incorrect Email and Password Combination!");
                         setOpen(true);
                     }
                 });
@@ -97,7 +105,7 @@ export default function Authentication(props) {
                     </Typography>
                 </CardContent>
                 <form>
-                    <TextField id="username" label="Username" variant="standard" autoComplete="username" sx={{ mx: '5%', width: '-webkit-fill-available' }} value={username} onChange={handleUsername} onKeyPress={handleEnter}/>
+                    <TextField id="email" label="Email" variant="standard" autoComplete="email" sx={{ mx: '5%', width: '-webkit-fill-available' }} value={email} onChange={handleUsername} onKeyPress={handleEnter}/>
                     <TextField id="password" label="Password" type="password" autoComplete="current-password" variant="standard" sx={{ mx: '5%', mt: '5%', width: '-webkit-fill-available' }} value={password} onChange={handlePassword} onKeyPress={handleEnter}/>
                 </form>
 
